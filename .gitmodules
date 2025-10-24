@@ -1,0 +1,6 @@
+[submodule "risk"]
+	path = risk
+	url = https://github.com/Pl3wt0/APCSA2025RISK.git
+[submodule "W"]
+	path = W
+	url = https://github.com/ommehta16/WINNERS-Project.git
