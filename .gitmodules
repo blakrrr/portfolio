@@ -1,6 +1,6 @@
 [submodule "risk"]
-	path = risk
+	path = APCSA's Risk
 	url = https://github.com/Pl3wt0/APCSA2025RISK.git
 [submodule "W"]
-	path = W
+	path = W Image Data Editor (WIDE)
 	url = https://github.com/ommehta16/WINNERS-Project.git
