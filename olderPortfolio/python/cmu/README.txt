@@ -1,1 +1,0 @@
-this space is for projects created on CMU CS Academy! you will not be able to run these on a standard ide, not without the necessary libraries at least. i recommend using the built in sandbox on their website if you are attempting to look at this, also, each py file will have a respective txt containing a link to test it. keep in mind, it will not have the code!!
