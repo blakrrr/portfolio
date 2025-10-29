@@ -7,11 +7,259 @@
 	<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-	<div class="container">
-		<header>
-			<h1>header</h1>
-		</header>
-		<p>paragraph</p>
+	<button class="hamburger" id="menuToggle" aria-label="Toggle menu">☰</button>
+	<button class="reduce-motion-toggle" id="reduceMotionToggle" aria-pressed="false" title="Toggle reduced motion">
+	  <span class="checkbox" aria-hidden="true"></span>
+	  <span class="label">Reduce Motion</span>
+	</button>
+	
+	<div class="app-layout" id="appLayout">
+		<aside class="sidebar">
+			<div class="explorer-header">
+				<span class="explorer-icon">📁</span>
+				<span class="explorer-title">File Explorer</span>
+			</div>
+			<div class="explorer-tree">
+				<div class="tree-item" data-page="home" tabindex="0">
+					<span class="tree-icon"><img src="images/icons/page.png" alt="Home icon" class="tree-img"></span>
+					<a href="#home">Home</a>
+				</div>
+				<div class="tree-item" data-page="about" tabindex="0">
+					<span class="tree-icon"><img src="images/icons/page.png" alt="About icon" class="tree-img"></span>
+					<a href="#about">About</a>
+				</div>
+				<div class="tree-item" data-page="contact" tabindex="0">
+					<span class="tree-icon"><img src="images/icons/page.png" alt="Contact icon" class="tree-img"></span>
+					<a href="#contact">Contact</a>
+				</div>
+			</div>
+		</aside>
+		
+		<main class="main-content">
+			<div class="window-group">
+			<div class="notepad" role="group" aria-label="Notepad window">
+				<div class="titlebar">
+					<div class="title" id="notepadTitle">Untitled - Notepad</div>
+					<div class="window-controls" aria-hidden="true">
+						<button class="btn min" tabindex="-1">—</button>
+						<button class="btn max" tabindex="-1">▢</button>
+						<button class="btn close" tabindex="-1">✕</button>
+					</div>
+				</div>
+				<div class="menubar">
+					<button>File</button>
+					<button>Edit</button>
+					<button>Format</button>
+					<button>View</button>
+					<button>Help</button>
+				</div>
+				<div class="notepad-body">
+					<div id="notepad-content">
+						<header>
+							<h1>Welcome Home</h1>
+						</header>
+						<p>This is the home page. Click on the navigation links to explore different sections.</p>
+					</div>
+				</div>
+				<div class="statusbar">Ln 1, Col 1   |   UTF-8   |   Windows (CRLF)</div>
+			</div>
+
+			<!-- Preview window for project images -->
+			<div class="preview-window hidden" id="previewWindow" role="group" aria-label="Preview window">
+				<div class="titlebar">
+					<div class="title" id="previewTitle">Preview</div>
+					<div class="window-controls" aria-hidden="true">
+						<button class="btn min" tabindex="-1">—</button>
+						<button class="btn max" tabindex="-1">▢</button>
+						<button class="btn close" tabindex="-1" id="closePreview">✕</button>
+					</div>
+				</div>
+				<div class="preview-body">
+					<a id="previewLink" class="preview-link" href="#" aria-label="Open project details">
+						<img id="previewImage" alt="Project preview" />
+					</a>
+					<div class="preview-hint" id="previewHint">Hey, you can click this image to open more details.</div>
+				</div>
+			</div>
+			</div>
+		</main>
+		
+		<footer class="bottom-panel">
+			<h3>Projects</h3>
+			<div class="projects-container">
+				<div class="project-item">
+					<a href="#wide" class="project-link" data-project="wide">
+						<img src="images/wide.png" alt="W Image Data Editor (WIDE)" loading="lazy">
+						<span class="project-title">W Image Data Editor (WIDE)</span>
+					</a>
+				</div>
+				<div class="project-item">
+					<a href="#risk" class="project-link" data-project="risk">
+						<img src="images/risk.png" alt="APCSA's Risk" loading="lazy">
+						<span class="project-title">APCSA's Risk</span>
+					</a>
+				</div>
+				<div class="project-item">
+					<a href="#rpg" class="project-link" data-project="rpg">
+						<img src="images/ohyea.gif" alt="RPG" loading="lazy">
+						<span class="project-title">RPG</span>
+					</a>
+				</div>
+			</div>
+		</footer>
 	</div>
+	
+	<script>
+		const toggle = document.getElementById('menuToggle');
+		const layout = document.getElementById('appLayout');
+		const notepadContent = document.getElementById('notepad-content');
+		const notepadTitle = document.getElementById('notepadTitle');
+        const reduceBtn = document.getElementById('reduceMotionToggle');
+		const previewWindow = document.getElementById('previewWindow');
+		const previewImage = document.getElementById('previewImage');
+		const previewLink = document.getElementById('previewLink');
+		const previewHint = document.getElementById('previewHint');
+		const previewTitle = document.getElementById('previewTitle');
+		const closePreviewBtn = document.getElementById('closePreview');
+		
+		const pageContent = {
+			home: {
+				title: 'untitled.txt - Notepad',
+				content: '<header><h1>Hello World</h1></header><p>This is the home page. Click on the navigation links to explore different sections.</p>'
+			},
+			about: {
+				title: 'about.txt - Notepad',
+				content: '<header><h1>About Me</h1></header><p>Hi! I\'m a developer who enjoys creating interesting projects. Check out my work in the projects section below.</p>'
+			},
+			contact: {
+				title: 'contact.txt - Notepad',
+				content: '<header><h1>Contact Information</h1></header><p>Contact Email: blakeharper714@gmail.com<br>GitHub: github.com/blakrrr<br>Discord: blakrr</p>'
+			},
+			wide: {
+				title: 'WIDE.txt - Notepad',
+				content: '<header><h1>W Image Data Editor (WIDE)</h1></header><p>Developed for the 2024 Tufts Pre-College Coding Academy, the W Image Data Editor (WIDE) is a GUI based image editor created by Om Mehta, Armaan Thadani, Blake Harper, and Damien Gazen. Using pygame, pillow, and numpy, the app adjusts any uploaded image through various adjustable filters. Check the README for official documentation.</p>'
+			},
+			risk: {
+				title: 'Risk.txt - Notepad',
+				content: "<header><h1>APCSA\'s Risk</h1></header><p>A Java recreation of the game Risk developed for my junior year's APCSA class. Developed in tandem with other classmates, namely Lucas Rosen and Ian Chemel. Check the README for additional information on development and credits.</p>"
+			},
+			rpg: {
+				title: 'RPG.txt - Notepad',
+				content: '<header><h1>RPG Game</h1></header><p>A small indie RPG about tyranny and control. Actively in development.</p>'
+			}
+		};
+
+		const previewSrc = {
+			wide: 'images/wide.png',
+			risk: 'images/risk.png',
+			rpg: 'images/ohyea.gif'
+		};
+
+		const previewHints = {
+			wide: 'Click the image to head to the Github page for WIDE.',
+			risk: "Click the image to head to the Github page for APCSA's Risk.",
+			rpg: 'Click the image to head to the RPG page.'
+		};
+        const previewLinks = {
+			wide: 'https://github.com/ommehta16/WINNERS-Project',
+			risk: 'https://github.com/Pl3wt0/APCSA2025RISK/',
+			rpg: 'rpg.html'
+		};
+
+		function showPreview(key) {
+			const src = previewSrc[key];
+			if (!src) return;
+			previewImage.src = src;
+			previewTitle.textContent = `Preview — ${key.toUpperCase()}`;
+			const href = previewLinks[key] || `${key}.html`;
+			previewLink.href = href;
+			previewLink.setAttribute('aria-label', `Open ${href}`);
+			previewHint.textContent = previewHints[key] || `Hey, you can click this image to open ${href}.`;
+			previewWindow.classList.remove('hidden');
+		}
+
+		function hidePreview() {
+			previewWindow.classList.add('hidden');
+			previewImage.removeAttribute('src');
+			previewLink.href = '#';
+		}
+
+		closePreviewBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			hidePreview();
+		});
+		
+		toggle.addEventListener('click', () => {
+			layout.classList.toggle('menu-open');
+			document.body.classList.toggle('menu-open');
+		});
+
+		function applyReduceMotionState(enabled) {
+			if (enabled) {
+				document.body.classList.add('reduce-motion');
+				reduceBtn.setAttribute('aria-pressed', 'true');
+				reduceBtn.querySelector('.checkbox').style.background = '#0066cc';
+				reduceBtn.querySelector('.checkbox').style.borderColor = '#0066cc';
+				reduceBtn.querySelector('.checkbox').innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14"><polyline points="3,7 6,10 11,4" style="fill:none;stroke:#fff;stroke-width:2"/></svg>';
+				localStorage.setItem('reduceMotion', '1');
+			} else {
+				document.body.classList.remove('reduce-motion');
+				reduceBtn.setAttribute('aria-pressed', 'false');
+				reduceBtn.querySelector('.checkbox').style.background = '#fff';
+				reduceBtn.querySelector('.checkbox').style.borderColor = '#c4c4c4';
+				reduceBtn.querySelector('.checkbox').innerHTML = '';
+				localStorage.removeItem('reduceMotion');
+			}
+		}
+
+		const stored = localStorage.getItem('reduceMotion');
+		const prefers = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		applyReduceMotionState(stored === '1' || (!!stored === false && prefers));
+
+		reduceBtn.updateVisual = function() {
+		  const checked = document.body.classList.contains('reduce-motion');
+		  reduceBtn.setAttribute('aria-pressed', checked ? 'true' : 'false');
+		  reduceBtn.querySelector('.checkbox').style.background = checked ? '#0066cc' : '#fff';
+		  reduceBtn.querySelector('.checkbox').style.borderColor = checked ? '#0066cc' : '#c4c4c4';
+		  reduceBtn.querySelector('.checkbox').innerHTML = checked ? '<svg width="14" height="14" viewBox="0 0 14 14"><polyline points="3,7 6,10 11,4" style="fill:none;stroke:#fff;stroke-width:2"/></svg>' : '';
+		};
+
+		reduceBtn.addEventListener('click', () => {
+			const isOn = document.body.classList.contains('reduce-motion');
+			applyReduceMotionState(!isOn);
+			reduceBtn.updateVisual();
+		});
+		
+		document.querySelectorAll('.tree-item').forEach(item => {
+			item.addEventListener('click', (e) => {
+				e.preventDefault();
+				const page = item.getAttribute('data-page');
+				if (page && pageContent[page]) {
+					notepadContent.innerHTML = pageContent[page].content;
+					notepadTitle.textContent = pageContent[page].title;
+					hidePreview();
+				}
+			});
+
+			item.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					item.click();
+				}
+			});
+		});
+
+		document.querySelectorAll('.project-link').forEach(link => {
+			link.addEventListener('click', (e) => {
+				e.preventDefault();
+				const project = link.getAttribute('data-project');
+				if (project && pageContent[project]) {
+					notepadContent.innerHTML = pageContent[project].content;
+					notepadTitle.textContent = pageContent[project].title;
+					showPreview(project);
+				}
+			});
+		});
+	</script>
 </body>
 </html>
